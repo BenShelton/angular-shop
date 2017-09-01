@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "prestart": "mongod --fork --logpath /dev/null",
+    "start": "node server.js & ng serve",
+    "stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -22,6 +24,9 @@
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
     "core-js": "^2.4.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "mongodb": "^2.2.31",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"
   },
