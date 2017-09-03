@@ -1,0 +1,49 @@
+<h1>Register</h1>
+
+<form #userForm="ngForm" (ngSubmit)="onSubmit()">
+
+  <label for="name">
+    Name:
+  </label>
+  <input
+    type="email"
+    name="name"
+    required
+    [(ngModel)]="user.name"
+  />
+  <br/>
+
+  <label for="email">
+    Email:
+  </label>
+  <input
+    type="email"
+    name="email"
+    required
+    [(ngModel)]="user.email"
+  />
+  <br/>
+
+  <label for="password">
+    Password:
+  </label>
+  <input
+    type="password"
+    name="password"
+    required
+    [(ngModel)]="user.password"/>
+  <br/>
+
+  <br/>
+  <re-captcha
+    name="captcha"
+    required
+    [(ngModel)]="user.captcha">
+  </re-captcha>
+  <br/><br/>
+
+  <button type="submit" [disabled]="!userForm.form.valid">
+    Register
+  </button>
+
+</form>
