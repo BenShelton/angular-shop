@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
     name: <string> null,
     email: <string> null,
     password: <string> null,
+    role: <string> 'user',
     captcha: <any> null
   };
 

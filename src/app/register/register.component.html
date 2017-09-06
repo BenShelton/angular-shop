@@ -34,6 +34,22 @@
     [(ngModel)]="user.password"/>
   <br/>
 
+  <div [hidden]="user.role !== 'admin'">
+    <label for="role">
+      Role:
+    </label>
+    <select
+      name="role"
+      required
+      [(ngModel)]="user.role"
+    >
+      <option value="user" selected>User</option>
+      <option value="manager">Manager</option>
+      <option value="admin">Admin</option>
+    </select>
+    <br/>
+  </div>
+
   <br/>
   <re-captcha
     name="captcha"
