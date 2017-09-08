@@ -15,26 +15,17 @@ export function reducer(state = initialState, action: userAction.Actions): User 
     case userAction.ActionTypes.CREATE_USER_SUCCESS:
       return action.payload;
 
-    case userAction.ActionTypes.LOAD_USER_SUCCESS:
+    case userAction.ActionTypes.LOGIN_USER_SUCCESS:
       return action.payload;
 
     case userAction.ActionTypes.LOGOUT_USER:
       return initialState;
 
-    // case LOAD_USER_SUCCESS:
-    //   return state;
-    //
-    // case UPDATE_USER:
-    //   return state;
-    //
-    // case UPDATE_USER_SUCCESS:
-    //   return state;
-    //
-    // case DELETE_USER:
-    //   return state;
-    //
-    // case DELETE_USER_SUCCESS:
-    //   return state;
+    case userAction.ActionTypes.UPDATE_USER_SUCCESS:
+      return action.payload;
+
+    case userAction.ActionTypes.DELETE_USER_SUCCESS:
+      return state;
 
     default:
       return state;

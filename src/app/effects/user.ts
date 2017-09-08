@@ -16,15 +16,6 @@ import 'rxjs/add/operator/do';
 @Injectable()
 export class UserEffects {
 
-  // @Effect()
-  // load$: Observable<Action> = this.actions$.ofType(data.ActionTypes.LOAD)
-  //   .debounceTime(300)
-  //   .map((action: data.UpdateAction) => action.payload)
-  //   .switchMap(payload => this.dataService.load()
-  //     .map(res => new data.LoadSuccessAction(res))
-  //     .catch(err => of(new data.ServerFailAction(err)))
-  //   );
-
   @Effect()
   create$: Observable<Action> = this.actions$
     .ofType(userAction.ActionTypes.CREATE_USER)
@@ -45,58 +36,60 @@ export class UserEffects {
     }
   );
 
+  @Effect()
+  login$: Observable<Action> = this.actions$
+    .ofType(userAction.ActionTypes.LOGIN_USER)
+    .debounceTime(300)
+    .map((action: userAction.LoginUserAction) => action.payload)
+    .switchMap(payload => this.userService.login(payload)
+      .map(res => new userAction.LoginUserSuccessAction(res))
+      .catch(err => of(new userAction.ServerFailAction(err)))
+    );
+
+  @Effect({ dispatch: false })
+  redirectLogin$: Observable<Action> = this.actions$
+    .ofType(userAction.ActionTypes.LOGIN_USER_SUCCESS)
+    .map((action: userAction.LoginUserSuccessAction) => action.payload)
+    .do(payload => {
+      this.toasterService.pop('success', 'Logged In', `Welcome ${payload.name}`);
+      this.router.navigate(['/shop']);
+    }
+  );
+
+  @Effect()
+  update$: Observable<Action> = this.actions$
+    .ofType(userAction.ActionTypes.UPDATE_USER)
+    .debounceTime(300)
+    .map((action: userAction.UpdateUserAction) => action.payload)
+    .switchMap(payload => this.userService.update(payload)
+      .map(res => new userAction.UpdateUserSuccessAction(res))
+      .catch(err => of(new userAction.ServerFailAction(err)))
+    );
+
+  @Effect({ dispatch: false })
+  redirectUpdate$: Observable<Action> = this.actions$
+    .ofType(userAction.ActionTypes.UPDATE_USER_SUCCESS)
+    .map((action: userAction.UpdateUserSuccessAction) => action.payload)
+    .do(payload => {
+      this.toasterService.pop('success', 'Account Updated', `Details Changed`);
+      this.router.navigate(['/shop']);
+    }
+  );
+
   @Effect({ dispatch: false })
   redirectLogout$: Observable<Action> = this.actions$
     .ofType(userAction.ActionTypes.LOGOUT_USER)
-    .do(authed => this.router.navigate(['/login'])
+    .do(() => this.router.navigate(['/login'])
   );
 
   @Effect({ dispatch: false })
-  serverError$: Observable<Action> = this.actions$
-    .ofType(userAction.ActionTypes.LOGOUT_USER)
-    .do(authed => this.router.navigate(['/login'])
+  serverFail$: Observable<Action> = this.actions$
+    .ofType(userAction.ActionTypes.SERVER_FAIL)
+    .map((action: userAction.ServerFailAction) => action.payload)
+    .do(payload => {
+      this.toasterService.pop('error', 'Server Error', payload.error.message);
+    }
   );
-
-  //
-  // @Effect({dispatch: false})
-  // addFail$: Observable<Action> = this.actions$.ofType(data.ActionTypes.SERVER_FAIL)
-  //   .debounceTime(300)
-  //   .map((action: data.UpdateAction) => action.payload)
-  //   .switchMap(payload => {
-  //     this.toasterService.pop('error', 'Failure',
-  //       isObject(payload.error) ? keys(
-  //         mapKeys(payload.error, (value: Array<string>, key: string) => `${key}: ${value.join(';')}`)).join(';') :
-  //         payload.error);
-  //     return of(null);
-  //   });
-  //
-  // @Effect()
-  // remove$: Observable<Action> = this.actions$.ofType(data.ActionTypes.REMOVE)
-  //   .debounceTime(300)
-  //   .map((action: data.UpdateAction) => action.payload)
-  //   .switchMap(payload => this.dataService.remove(payload)
-  //     .map(res => new data.RemoveSuccessAction(payload))
-  //     .catch(err => of(new data.ServerFailAction(err)))
-  //   );
-  //
-  // @Effect()
-  // update$: Observable<Action> = this.actions$.ofType(data.ActionTypes.UPDATE)
-  //   .debounceTime(300)
-  //   .map((action: data.UpdateAction) => action.payload)
-  //   .switchMap(payload => this.dataService.update(payload)
-  //     .map(res => new data.UpdateSuccessAction(res))
-  //     .catch(err => of(new data.ServerFailAction(err)))
-  //   );
-  //
-  // @Effect({dispatch: false})
-  // refreshToken$: Observable<Action> = this.actions$.ofType(data.ActionTypes.REFRESH_TOKEN)
-  //   .debounceTime(300)
-  //   .switchMap(() => this.dataService.refreshToken().map(() => null));
-  //
-
-  // static get parameters() {
-  //   return [[SweetAlertService]];
-  // }
 
   constructor(
     private actions$: Actions,

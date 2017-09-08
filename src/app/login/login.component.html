@@ -1,0 +1,33 @@
+<h1>Login</h1>
+
+<form #userForm="ngForm" (ngSubmit)="onSubmit()">
+
+  <label for="email">
+    Email:
+  </label>
+  <input
+    type="email"
+    name="email"
+    required
+    [(ngModel)]="user.email"
+  />
+  <br/>
+
+  <label for="password">
+    Password:
+  </label>
+  <input
+    type="password"
+    name="password"
+    required
+    [(ngModel)]="user.password"/>
+  <br/>
+
+  <br/>
+  <button type="submit" [disabled]="!userForm.form.valid">
+    Login
+  </button>
+
+</form>
+
+<button (click)="autofillUser()">Autofill</button>

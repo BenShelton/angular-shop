@@ -12,8 +12,12 @@ export class UserService {
     return this.http.post(`/api/user/create`, payload);
   }
 
-  load(payload) {
-    return this.http.post(`/api/user/load`, payload);
+  login(payload) {
+    return this.http.post(`/api/user/login`, payload);
+  }
+
+  update(payload) {
+    return this.http.patch(`api/user/update`, payload);
   }
 
 }

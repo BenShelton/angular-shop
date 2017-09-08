@@ -1,9 +1,10 @@
 const express = require('express');
 const assert = require('assert');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const PORT = process.env.PORT || 8080;
-const MONGOURI = process.env.MONGOURI || 'mongodb://localhost';
+const MONGOURI = process.env.MONGOURI || 'mongodb://localhost/angular-academy';
 
 const mongodb = require('./db');
 const apiRoutes = require('./routes/api');

@@ -31,22 +31,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { AccountComponent } from './account/account.component';
 
 // router setup
 const appRoutes: Routes = [
-  // { path: 'crisis-center', component: CrisisListComponent },
-  // { path: 'hero/:id',      component: HeroDetailComponent },
-  // {
-  //   path: 'heroes',
-  //   component: HeroListComponent,
-  //   data: { title: 'Heroes List' }
-  // },
-  // { path: '',
-  //   redirectTo: '/heroes',
-  //   pathMatch: 'full'
-  // },
   { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: 'register', pathMatch: 'full', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'account', component: AccountComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -56,7 +49,9 @@ const appRoutes: Routes = [
     NavbarComponent,
     HomeComponent,
     PageNotFoundComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

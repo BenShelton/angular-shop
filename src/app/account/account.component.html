@@ -1,4 +1,4 @@
-<h1>Register</h1>
+<h1>Account</h1>
 
 <form #userForm="ngForm" (ngSubmit)="onSubmit()">
 
@@ -10,6 +10,7 @@
     name="name"
     required
     [(ngModel)]="user.name"
+    [disabled]="!editMode"
   />
   <br/>
 
@@ -21,6 +22,7 @@
     name="email"
     required
     [(ngModel)]="user.email"
+    [disabled]="!editMode"
   />
   <br/>
 
@@ -30,8 +32,8 @@
   <input
     type="password"
     name="password"
-    required
     [(ngModel)]="user.password"
+    [disabled]="!editMode"
   />
   <br/>
 
@@ -43,6 +45,7 @@
       name="role"
       required
       [(ngModel)]="user.role"
+      [disabled]="!editMode"
     >
       <option value="user" selected>User</option>
       <option value="manager">Manager</option>
@@ -52,20 +55,11 @@
   </div>
 
   <br/>
-  <re-captcha
-    name="captcha"
-    required
-    [(ngModel)]="user.captcha">
-  </re-captcha>
-  <br/><br/>
-
-  <button type="submit" [disabled]="!userForm.form.valid">
-    Register
+  <button *ngIf="!editMode" (click)="editUser($event)">
+    Edit
   </button>
-
-  <br/><br/>
-  <button (click)="autofillUser($event)">
-    Autofill
+  <button *ngIf="editMode" type="submit" [disabled]="!userForm.form.valid">
+    Update
   </button>
 
 </form>

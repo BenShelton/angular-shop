@@ -1,5 +1,6 @@
 const express = require('express');
 const assert = require('assert');
+const ObjectId = require('mongodb').ObjectID;
 
 const mongodb = require('../db');
 
@@ -50,7 +51,7 @@ router.post('/login', (req, res) => {
     email: req.body.email,
     password: req.body.password
   };
-  // insert document
+  // find document
   coll().findOne(query, (err, result) => {
     assert.equal(null, err);
     try {
@@ -66,6 +67,45 @@ router.post('/login', (req, res) => {
       name: result.name,
       email: result.email,
       role: result.role
+    };
+    return res.json(user);
+  });
+});
+
+router.patch('/update', (req, res) => {
+  // check fields
+  try {
+    assert.ok(req.body.id);
+  } catch (e) {
+    return res.status(400).json({
+      message: 'Login ID Not Found',
+      err: e
+    });
+  }
+  let query = {
+    '_id': ObjectId(req.body.id)
+  };
+  let updateUser = {};
+  if (req.body.name) updateUser.name = req.body.name;
+  if (req.body.email) updateUser.email = req.body.email;
+  if (req.body.password) updateUser.password = req.body.password;
+  if (req.body.role) updateUser.role = req.body.role;
+
+  // find and modify document
+  coll().findOneAndUpdate(query, { $set: updateUser }, { returnOriginal: false }, (err, result) => {
+    try {
+      assert.equal(null, err);
+    } catch (e) {
+      return res.status(500).json({
+        message: 'User Not Updated',
+        err: e
+      });
+    }
+    let user = {
+      id: result.value._id,
+      name: result.value.name,
+      email: result.value.email,
+      role: result.value.role
     };
     return res.json(user);
   });
