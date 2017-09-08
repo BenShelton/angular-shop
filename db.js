@@ -2,7 +2,8 @@ const mongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
 var state = {
-  db: null
+  db: null,
+  collections: {}
 };
 
 module.exports = {

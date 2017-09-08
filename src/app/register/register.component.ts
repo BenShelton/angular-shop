@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as rootReducer from '../reducers';
+import * as userAction from '../actions/user';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styles: [
     ':host { text-align: center; }',
-    'input { width: 80%; max-width: 160px; }',
+    'input, select { width: 80%; max-width: 160px; }',
     'label { display: inline-block; width: 20%; max-width: 80px; text-align: right; }',
     'input.ng-invalid.ng-touched { background: #FF5F49; }',
     'input.ng-valid.ng-touched { background: #C7FF8E; }',
@@ -22,7 +25,7 @@ export class RegisterComponent implements OnInit {
     captcha: <any> null
   };
 
-  constructor() { }
+  constructor(private store: Store<rootReducer.State>) { }
 
   ngOnInit() {
   }
@@ -31,7 +34,14 @@ export class RegisterComponent implements OnInit {
     console.log(`Resolved captcha with response ${captchaResponse}:`);
   }
 
+  autofillUser() {
+    this.user.name = 'Ben';
+    this.user.email = 'ben@test.com';
+    this.user.password = 'password';
+    this.user.role = 'admin';
+  }
+
   onSubmit() {
-    console.log('submitted');
+    this.store.dispatch(new userAction.CreateUserAction(this.user));
   }
 }

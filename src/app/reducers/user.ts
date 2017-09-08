@@ -1,21 +1,44 @@
-import { ActionReducer, Action } from '@ngrx/store';
+import { Action } from '@ngrx/store';
+import { User } from '../models/user';
+import * as userAction from '../actions/user';
 
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
-export const RESET = 'RESET';
+const initialState: User = {
+  id: null,
+  name: null,
+  email: null,
+  role: null
+};
 
-export function userReducer(state: number = 0, action: Action) {
+export function reducer(state = initialState, action: userAction.Actions): User {
   switch (action.type) {
-    case INCREMENT:
-      return state + 1;
 
-    case DECREMENT:
-      return state - 1;
+    case userAction.ActionTypes.CREATE_USER_SUCCESS:
+      return action.payload;
 
-    case RESET:
-      return 0;
+    case userAction.ActionTypes.LOAD_USER_SUCCESS:
+      return action.payload;
+
+    case userAction.ActionTypes.LOGOUT_USER:
+      return initialState;
+
+    // case LOAD_USER_SUCCESS:
+    //   return state;
+    //
+    // case UPDATE_USER:
+    //   return state;
+    //
+    // case UPDATE_USER_SUCCESS:
+    //   return state;
+    //
+    // case DELETE_USER:
+    //   return state;
+    //
+    // case DELETE_USER_SUCCESS:
+    //   return state;
 
     default:
       return state;
   }
 }
+
+export const getUser = (state: User) => state;
