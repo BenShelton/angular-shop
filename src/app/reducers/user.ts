@@ -13,7 +13,7 @@ export function reducer(state = initialState, action: userAction.Actions): User 
   switch (action.type) {
 
     case userAction.ActionTypes.CREATE_USER_SUCCESS:
-      return action.payload;
+      return state.role === 'admin' ? state : action.payload;
 
     case userAction.ActionTypes.LOGIN_USER_SUCCESS:
       return action.payload;

@@ -7,11 +7,14 @@ import * as userAction from '../actions/user';
 import { UserService } from '../services/user.service';
 import { ToasterService } from 'angular2-toaster';
 import { of } from 'rxjs/observable/of';
+import { Store } from '@ngrx/store';
+import * as rootReducer from '../reducers';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/withLatestFrom';
 
 @Injectable()
 export class UserEffects {
@@ -31,8 +34,17 @@ export class UserEffects {
     .ofType(userAction.ActionTypes.CREATE_USER_SUCCESS)
     .map((action: userAction.CreateUserSuccessAction) => action.payload)
     .do(payload => {
-      this.toasterService.pop('success', 'User Created', `Welcome ${payload.name}`);
-      this.router.navigate(['/shop']);
+      this.store.select(rootReducer.getUser)
+        .take(1)
+        .subscribe(storePayload => {
+          if (storePayload.role === 'admin') {
+            this.toasterService.pop('success', 'User Created', `User may now login`);
+            this.router.navigate(['/admin/users/list']);
+          } else {
+            this.toasterService.pop('success', 'User Created', `Welcome ${payload.name}`);
+            this.router.navigate(['/shop']);
+          }
+        });
     }
   );
 
@@ -95,7 +107,8 @@ export class UserEffects {
     private actions$: Actions,
     private userService: UserService,
     private router: Router,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private store: Store<rootReducer.State>
   ) {
   }
 }

@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 import { type } from '../util';
-import { User } from '../models/user';
 
 export const ActionTypes = {
   CREATE_USER: type('[User] Create User'),

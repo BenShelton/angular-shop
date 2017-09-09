@@ -17,7 +17,7 @@ import * as userAction from '../actions/user';
 })
 export class RegisterComponent implements OnInit {
 
-  user = {
+  public user = {
     name: <string> null,
     email: <string> null,
     password: <string> null,
@@ -25,7 +25,15 @@ export class RegisterComponent implements OnInit {
     captcha: <any> null
   };
 
-  constructor(private store: Store<rootReducer.State>) { }
+  public isAdmin: boolean;
+
+  constructor(private store: Store<rootReducer.State>) {
+    this.store.select(rootReducer.getUser)
+      .take(1)
+      .subscribe(payload => {
+        this.isAdmin = payload.role === 'admin';
+      });
+  }
 
   ngOnInit() {
   }

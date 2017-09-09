@@ -35,7 +35,7 @@
   />
   <br/>
 
-  <div [hidden]="user.role !== 'admin'">
+  <div [hidden]="!isAdmin">
     <label for="role">
       Role:
     </label>
@@ -64,7 +64,7 @@
   </button>
 
   <br/><br/>
-  <button (click)="autofillUser($event)">
+  <button [hidden]="isAdmin" (click)="autofillUser($event)">
     Autofill
   </button>
 
