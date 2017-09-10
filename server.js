@@ -22,6 +22,7 @@ mongodb.connect(MONGOURI, {}, (err, db) => {
   app.use(express.static(__dirname + '/public'));
 
   // API
+  global.rootDir = __dirname;
   app.use('/api', apiRoutes);
 
   // Invalid routes

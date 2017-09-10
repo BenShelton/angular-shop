@@ -11,10 +11,9 @@ export const routes: Routes = [
   { path: '', component: AdminComponent, children: [
     { path: 'products/list', component: ProductListComponent },
     { path: 'products/add', component: EditProductComponent },
-    { path: 'products/edit', component: EditProductComponent },
+    { path: 'products/edit/:id', component: EditProductComponent },
     { path: 'orders/list', component: OrderListComponent },
     { path: 'users/list', component: UserListComponent },
     { path: 'users/add', component: RegisterComponent }
-
   ]},
 ];

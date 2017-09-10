@@ -18,9 +18,11 @@ import { reducers, metaReducers } from './reducers';
 
 // effects
 import { UserEffects } from './effects/user';
+import { ProductEffects } from './effects/product';
 
 // services
 import { UserService } from './services/user.service';
+import { ProductService } from './services/product.service';
 
 // routes
 import { routes } from './app.routes';
@@ -59,12 +61,16 @@ import { RegisterModule } from './register/register.module';
     RegisterModule,
     ToasterModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([
+      UserEffects,
+      ProductEffects
+    ]),
     StoreDevtoolsModule.instrument({ maxAge: 10 }),
     RouterModule.forRoot(routes, {/* enableTracing: true */})
   ],
   providers: [
-    UserService
+    UserService,
+    ProductService
   ],
   bootstrap: [AppComponent]
 })

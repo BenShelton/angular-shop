@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
   template: `
     <nav>
       <a class="logo" routerLink="/"></a>
-      <a routerLink="/shop" routerLinkActive="active">Shop</a>
+      <a *ngIf="isUser$ | async" routerLink="/shop" routerLinkActive="active">Shop</a>
       <a *ngIf="isManager$ | async" routerLink="/manager" routerLinkActive="active">Manager</a>
       <a *ngIf="isAdmin$ | async" routerLink="/admin" routerLinkActive="active">Admin</a>
       <div class="spacer"></div>
@@ -54,6 +54,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   public loggedIn$: Observable<boolean>;
   public loggedOut$: Observable<boolean>;
+  public isUser$: Observable<boolean>;
   public isManager$: Observable<boolean>;
   public isAdmin$: Observable<boolean>;
   private alive = true;
@@ -66,6 +67,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.loggedOut$ = this.store.select(rootReducer.getUser)
       .takeWhile(() => this.alive)
       .map((user) => !user.id);
+
+    this.isUser$ = this.store.select(rootReducer.getUser)
+      .takeWhile(() => this.alive)
+      .map((user) => user.role === 'user' || !user.role);
 
     this.isManager$ = this.store.select(rootReducer.getUser)
       .takeWhile(() => this.alive)

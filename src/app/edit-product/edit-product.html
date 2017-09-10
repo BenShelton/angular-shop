@@ -1,0 +1,67 @@
+<h1>Product Editor</h1>
+<form #userForm="ngForm" (ngSubmit)="onSubmit()">
+
+  <label for="name">
+    Name:
+  </label>
+  <input
+    type="text"
+    placeholder="Product Name"
+    name="name"
+    [(ngModel)]="product.name"
+    required
+  />
+  <br/>
+
+  <label for="price">
+    Price:
+  </label>
+  <input
+    type="number"
+    step="0.01"
+    min="0.01"
+    name="price"
+    [(ngModel)]="product.price"
+    required
+  />
+  <br/>
+
+  <label for="stock">
+    Stock:
+  </label>
+  <input
+    type="number"
+    step="1"
+    min="0"
+    name="stock"
+    [(ngModel)]="product.stock"
+    required
+  />
+  <br/><br/>
+
+  <p>Image Uploader:</p>
+  <image-upload
+    [url]="'/api/image/upload'"
+    [max]="1"
+    [preview]="false"
+    [extensions]="['jpg']"
+    [buttonCaption]="'Upload Image'"
+    [dropBoxMessage]="'Or Drop Here To Upload!'"
+    (onFileUploadFinish)="imageUploaded($event)"
+    (onRemove)="imageRemoved($event)"
+  ></image-upload>
+  <br/>
+
+  <p>Current Image:</p>
+  <img
+    [src]="product.imageUrl || '/assets/placeholder.png'"
+    alt="No Image"
+    width="300"
+    height="300"
+  />
+  <br/><br/>
+
+  <button type="submit" [disabled]="!userForm.form.valid">
+    Submit
+  </button>
+</form>
