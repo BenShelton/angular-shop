@@ -53,6 +53,7 @@
 
   <br/>
   <re-captcha
+    *ngIf="!isAdmin"
     name="captcha"
     required
     [(ngModel)]="user.captcha">

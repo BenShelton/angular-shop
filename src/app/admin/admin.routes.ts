@@ -6,6 +6,7 @@ import { OrderListComponent } from '../order-list/order-list.component';
 import { UserListComponent } from '../user-list/user-list.component';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 import { RegisterComponent } from '../register/register.component';
+import { AccountComponent } from '../account/account.component';
 
 export const routes: Routes = [
   { path: '', component: AdminComponent, children: [
@@ -14,6 +15,7 @@ export const routes: Routes = [
     { path: 'products/edit/:id', component: EditProductComponent },
     { path: 'orders/list', component: OrderListComponent },
     { path: 'users/list', component: UserListComponent },
-    { path: 'users/add', component: RegisterComponent }
+    { path: 'users/add', component: RegisterComponent },
+    { path: 'users/edit/:id', component: AccountComponent }
   ]},
 ];

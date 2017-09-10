@@ -16,6 +16,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/withLatestFrom';
 
+const roleRedirect = {
+  user: '/shop',
+  manager: '/manager',
+  admin: '/admin'
+};
+
 @Injectable()
 export class UserEffects {
 
@@ -38,11 +44,11 @@ export class UserEffects {
         .take(1)
         .subscribe(storePayload => {
           if (storePayload.role === 'admin') {
-            this.toasterService.pop('success', 'User Created', `User may now login`);
+            this.toasterService.pop('success', 'User Created', `Account created for ${payload.name}`);
             this.router.navigate(['/admin/users/list']);
           } else {
             this.toasterService.pop('success', 'User Created', `Welcome ${payload.name}`);
-            this.router.navigate(['/shop']);
+            this.router.navigate([roleRedirect[storePayload.role]]);
           }
         });
     }
@@ -64,7 +70,7 @@ export class UserEffects {
     .map((action: userAction.LoginUserSuccessAction) => action.payload)
     .do(payload => {
       this.toasterService.pop('success', 'Logged In', `Welcome ${payload.name}`);
-      this.router.navigate(['/shop']);
+      this.router.navigate([roleRedirect[payload.role]]);
     }
   );
 
@@ -83,8 +89,17 @@ export class UserEffects {
     .ofType(userAction.ActionTypes.UPDATE_USER_SUCCESS)
     .map((action: userAction.UpdateUserSuccessAction) => action.payload)
     .do(payload => {
-      this.toasterService.pop('success', 'Account Updated', `Details Changed`);
-      this.router.navigate(['/shop']);
+      this.store.select(rootReducer.getUser)
+        .take(1)
+        .subscribe(storePayload => {
+          if (payload.id === storePayload.id) {
+            this.toasterService.pop('success', 'Account Updated', `Details Changed`);
+            this.router.navigate([roleRedirect[storePayload.role]]);
+          } else {
+            this.toasterService.pop('success', 'Account Updated', `Details Changed for ${payload.name}`);
+            this.router.navigate(['/admin/users/list']);
+          }
+        });
     }
   );
 

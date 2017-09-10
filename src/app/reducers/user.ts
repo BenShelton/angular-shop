@@ -22,7 +22,7 @@ export function reducer(state = initialState, action: userAction.Actions): User 
       return initialState;
 
     case userAction.ActionTypes.UPDATE_USER_SUCCESS:
-      return action.payload;
+      return state.id === action.payload.id ? action.payload : state;
 
     case userAction.ActionTypes.DELETE_USER_SUCCESS:
       return state;

@@ -18,10 +18,12 @@ import { reducers, metaReducers } from './reducers';
 
 // effects
 import { UserEffects } from './effects/user';
+import { UsersEffects } from './effects/users';
 import { ProductEffects } from './effects/product';
 
 // services
 import { UserService } from './services/user.service';
+import { UsersService } from './services/users.service';
 import { ProductService } from './services/product.service';
 
 // routes
@@ -33,13 +35,13 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
-import { AccountComponent } from './account/account.component';
 import { ShopComponent } from './shop/shop.component';
 import { ManagerComponent } from './manager/manager.component';
 
 // shared modules
 import { ProductListModule } from './product-list/product-list.module';
 import { RegisterModule } from './register/register.module';
+import { AccountModule } from './account/account.module';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,6 @@ import { RegisterModule } from './register/register.module';
     HomeComponent,
     PageNotFoundComponent,
     LoginComponent,
-    AccountComponent,
     ShopComponent,
     ManagerComponent
   ],
@@ -59,10 +60,12 @@ import { RegisterModule } from './register/register.module';
     BrowserAnimationsModule,
     ProductListModule,
     RegisterModule,
+    AccountModule,
     ToasterModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([
       UserEffects,
+      UsersEffects,
       ProductEffects
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 10 }),
@@ -70,6 +73,7 @@ import { RegisterModule } from './register/register.module';
   ],
   providers: [
     UserService,
+    UsersService,
     ProductService
   ],
   bootstrap: [AppComponent]
