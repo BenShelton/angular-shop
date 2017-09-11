@@ -22,6 +22,7 @@ export class EditProductComponent implements OnInit {
     stock: 0,
     imageUrl: null
   };
+  public role: string;
 
   constructor(
     private store: Store<rootReducer.State>,
@@ -31,6 +32,11 @@ export class EditProductComponent implements OnInit {
   ) {
     const id = route.snapshot.params.id;
     if (id) {
+      this.store.select(rootReducer.getUser)
+        .take(1)
+        .subscribe(user => {
+          this.role = user.role;
+        });
       this.store.select(rootReducer.getProduct)
         .take(1)
         .subscribe(products => {
@@ -39,9 +45,10 @@ export class EditProductComponent implements OnInit {
             this.product = match[0];
           } else {
             this.toasterService.pop('error', 'Product ID not found, try editing from the product list!');
-            this.router.navigate(['/admin/products/list']);
+            this.router.navigate([`${this.role}/products/list`]);
           }
         });
+
     }
   }
 
@@ -67,6 +74,10 @@ export class EditProductComponent implements OnInit {
   imageRemoved(event) {
     this.product.imageUrl = null;
     // remove image from server
+  }
+
+  canDelete() {
+    return this.product.id && this.role === 'admin';
   }
 
 }

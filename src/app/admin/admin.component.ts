@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-admin',
   template: `
     <h1>Admin Control Panel</h1>
-    <app-control-panel></app-control-panel>
+    <app-control-panel [isAdmin]="true"></app-control-panel>
   `,
   styles: [
     ':host { text-align: center; }'

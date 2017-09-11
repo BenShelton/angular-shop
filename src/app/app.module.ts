@@ -31,6 +31,7 @@ import { routes } from './app.routes';
 
 // guards
 import { AdminGuard } from './guards/admin.guard';
+import { ManagerGuard } from './guards/manager.guard';
 
 // components
 import { AppComponent } from './app.component';
@@ -39,7 +40,6 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
 import { ShopComponent } from './shop/shop.component';
-import { ManagerComponent } from './manager/manager.component';
 
 // shared modules
 import { ProductListModule } from './product-list/product-list.module';
@@ -53,8 +53,7 @@ import { AccountModule } from './account/account.module';
     HomeComponent,
     PageNotFoundComponent,
     LoginComponent,
-    ShopComponent,
-    ManagerComponent
+    ShopComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +77,8 @@ import { AccountModule } from './account/account.module';
     UserService,
     UsersService,
     ProductService,
-    AdminGuard
+    AdminGuard,
+    ManagerGuard
   ],
   bootstrap: [AppComponent]
 })

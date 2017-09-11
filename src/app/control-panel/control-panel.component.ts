@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-control-panel',
@@ -14,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
           <h3>Orders</h3>
           <a routerLink="./orders/list" routerLinkActive="active">List</a>
         </div>
-        <div class="section">
+        <div *ngIf="isAdmin" class="section">
           <h3>Users</h3>
           <a routerLink="./users/list" routerLinkActive="active">List</a>
           <a routerLink="./users/add" routerLinkActive="active">Add</a>
@@ -45,6 +45,8 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class ControlPanelComponent implements OnInit {
+
+  @Input() isAdmin: boolean;
 
   constructor() { }
 

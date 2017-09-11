@@ -66,5 +66,5 @@
   </button>
 
   <br/><br/>
-  <button *ngIf="product.id" class="delete" (click)="onDelete($event)">Delete</button>
+  <button *ngIf="canDelete()" class="delete" (click)="onDelete($event)">Delete</button>
 </form>
