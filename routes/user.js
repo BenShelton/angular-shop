@@ -30,7 +30,9 @@ router.post('/create', (req, res) => {
       id: result.insertedId,
       name: req.body.name,
       email: req.body.email,
-      role: req.body.role
+      role: req.body.role,
+      billingAddress: req.body.billingAddress,
+      shippingAddress: req.body.shippingAddress
     };
     return res.json(user);
   });
@@ -66,7 +68,9 @@ router.post('/login', (req, res) => {
       id: result._id,
       name: result.name,
       email: result.email,
-      role: result.role
+      role: result.role,
+      billingAddress: result.billingAddress,
+      shippingAddress: result.shippingAddress
     };
     return res.json(user);
   });
@@ -90,6 +94,8 @@ router.patch('/update', (req, res) => {
   if (req.body.email) updateUser.email = req.body.email;
   if (req.body.password) updateUser.password = req.body.password;
   if (req.body.role) updateUser.role = req.body.role;
+  if (req.body.billingAddress) updateUser.billingAddress = req.body.billingAddress;
+  if (req.body.shippingAddress) updateUser.shippingAddress = req.body.shippingAddress;
 
   // find and modify document
   coll().findOneAndUpdate(query, { $set: updateUser }, { returnOriginal: false }, (err, result) => {
@@ -105,7 +111,9 @@ router.patch('/update', (req, res) => {
       id: result.value._id,
       name: result.value.name,
       email: result.value.email,
-      role: result.value.role
+      role: result.value.role,
+      billingAddress: result.value.billingAddress,
+      shippingAddress: result.value.shippingAddress
     };
     return res.json(user);
   });

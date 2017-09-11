@@ -51,6 +51,77 @@
     <br/>
   </div>
 
+  <div class="addresses" *ngIf="user.role === 'user'">
+    <div class="address">
+      <p>Billing Address</p>
+      <label for="billingAddress1">Address 1</label>
+      <input
+        name="billingAddress1"
+        [(ngModel)]="user.billingAddress.address1"
+      />
+      <br/>
+      <label for="billingAddress2">Address 2</label>
+      <input
+        name="billingAddress2"
+        [(ngModel)]="user.billingAddress.address2"
+      />
+      <br/>
+      <label for="billingCity">City</label>
+      <input
+        name="billingCity"
+        [(ngModel)]="user.billingAddress.city"
+      />
+      <br/>
+      <label for="billingCounty">County</label>
+      <input
+        name="billingCounty"
+        [(ngModel)]="user.billingAddress.county"
+      />
+      <br/>
+      <label for="billingPostcode">Postcode</label>
+      <input
+        name="billingPostcode"
+        [(ngModel)]="user.billingAddress.postcode"
+      />
+      <br/>
+    </div>
+    <div class="address">
+      <p>Shipping Address</p>
+      <button (click)="copyAddress($event)">Copy Billing Address</button>
+      <br/><br/>
+      <label for="shippingAddress1">Address 1</label>
+      <input
+        name="shippingAddress1"
+        [(ngModel)]="user.shippingAddress.address1"
+      />
+      <br/>
+      <label for="shippingAddress2">Address 2</label>
+      <input
+        name="shippingAddress2"
+        [(ngModel)]="user.shippingAddress.address2"
+      />
+      <br/>
+      <label for="shippingCity">City</label>
+      <input
+        name="shippingCity"
+        [(ngModel)]="user.shippingAddress.city"
+      />
+      <br/>
+      <label for="shippingCounty">County</label>
+      <input
+        name="shippingCounty"
+        [(ngModel)]="user.shippingAddress.county"
+      />
+      <br/>
+      <label for="shippingPostcode">Postcode</label>
+      <input
+        name="shippingPostcode"
+        [(ngModel)]="user.shippingAddress.postcode"
+      />
+      <br/>
+    </div>
+  </div>
+
   <br/>
   <re-captcha
     *ngIf="!isAdmin"

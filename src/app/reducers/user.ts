@@ -6,7 +6,21 @@ const initialState: User = {
   id: null,
   name: null,
   email: null,
-  role: null
+  role: null,
+  billingAddress: {
+    address1: null,
+    address2: null,
+    city: null,
+    county: null,
+    postcode: null
+  },
+  shippingAddress: {
+    address1: null,
+    address2: null,
+    city: null,
+    county: null,
+    postcode: null
+  }
 };
 
 export function reducer(state = initialState, action: userAction.Actions): User {

@@ -23,6 +23,7 @@ export class EditProductComponent implements OnInit {
     imageUrl: null
   };
   public role: string;
+  private originalUrl: string;
 
   constructor(
     private store: Store<rootReducer.State>,
@@ -43,6 +44,7 @@ export class EditProductComponent implements OnInit {
           const match = products.filter(product => product.id === id);
           if (match.length === 1) {
             this.product = match[0];
+            this.originalUrl = this.product.imageUrl;
           } else {
             this.toasterService.pop('error', 'Product ID not found, try editing from the product list!');
             this.router.navigate([`${this.role}/products/list`]);
@@ -72,7 +74,7 @@ export class EditProductComponent implements OnInit {
   }
 
   imageRemoved(event) {
-    this.product.imageUrl = null;
+    this.product.imageUrl = this.originalUrl;
     // remove image from server
   }
 

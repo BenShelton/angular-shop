@@ -26,7 +26,9 @@ router.get('/load', (req, res) => {
         id: doc._id,
         name: doc.name,
         email: doc.email,
-        role: doc.role
+        role: doc.role,
+        billingAddress: doc.billingAddress,
+        shippingAddress: doc.shippingAddress
       });
     });
     res.json(users);

@@ -22,6 +22,20 @@ export class RegisterComponent implements OnInit {
     email: <string> null,
     password: <string> null,
     role: <string> 'user',
+    billingAddress: {
+      address1: null,
+      address2: null,
+      city: null,
+      county: null,
+      postcode: null
+    },
+    shippingAddress: {
+      address1: null,
+      address2: null,
+      city: null,
+      county: null,
+      postcode: null
+    },
     captcha: <any> null
   };
 
@@ -49,6 +63,11 @@ export class RegisterComponent implements OnInit {
     this.user.email = 'ben@test.com';
     this.user.password = 'password';
     this.user.role = 'admin';
+  }
+
+  copyAddress(event) {
+    event.preventDefault();
+    this.user.shippingAddress = this.user.billingAddress;
   }
 
   onSubmit() {

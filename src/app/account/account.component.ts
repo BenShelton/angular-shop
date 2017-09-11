@@ -25,8 +25,23 @@ export class AccountComponent implements OnInit {
     name: <string> null,
     email: <string> null,
     password: <string> null,
-    role: <string> null
+    role: <string> null,
+    billingAddress: {
+      address1: null,
+      address2: null,
+      city: null,
+      county: null,
+      postcode: null
+    },
+    shippingAddress: {
+      address1: null,
+      address2: null,
+      city: null,
+      county: null,
+      postcode: null
+    }
   };
+
   public editMode: Boolean = false;
   public canEditRole: Boolean = false;
   private alive = true;
@@ -48,6 +63,8 @@ export class AccountComponent implements OnInit {
             this.user.name = match[0].name;
             this.user.email = match[0].email;
             this.user.role = match[0].role;
+            this.user.billingAddress = match[0].billingAddress;
+            this.user.shippingAddress = match[0].shippingAddress;
           } else {
             this.toasterService.pop('error', 'User ID not found, try editing from the user list!');
             this.router.navigate(['/admin/users/list']);
@@ -78,6 +95,11 @@ export class AccountComponent implements OnInit {
   editUser(event) {
     event.preventDefault();
     this.editMode = true;
+  }
+
+  copyAddress(event) {
+    event.preventDefault();
+    this.user.shippingAddress = this.user.billingAddress;
   }
 
   deleteUser(event) {
