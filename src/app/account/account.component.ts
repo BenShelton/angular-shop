@@ -75,12 +75,17 @@ export class AccountComponent implements OnInit {
       .take(1)
       .subscribe(payload => {
         if (!id) {
-          this.user.id = payload.id;
-          this.user.name = payload.name;
-          this.user.email = payload.email;
-          this.user.role = payload.role;
-          this.user.billingAddress = payload.billingAddress;
-          this.user.shippingAddress = payload.shippingAddress;
+          if (payload.id) {
+            this.user.id = payload.id;
+            this.user.name = payload.name;
+            this.user.email = payload.email;
+            this.user.role = payload.role;
+            this.user.billingAddress = payload.billingAddress;
+            this.user.shippingAddress = payload.shippingAddress;
+          } else {
+            this.toasterService.pop('error', 'Please login to see your account');
+            this.router.navigate(['/login']);
+          }
         }
         this.canEditRole = payload.role === 'admin';
       }

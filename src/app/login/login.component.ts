@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import * as rootReducer from '../reducers';
 import * as userAction from '../actions/user';
 
@@ -21,7 +22,19 @@ export class LoginComponent implements OnInit {
     password: <string> null
   };
 
-  constructor(private store: Store<rootReducer.State>) { }
+  constructor(
+    private store: Store<rootReducer.State>,
+    private router: Router
+  ) {
+    this.store.select(rootReducer.getUser)
+      .take(1)
+      .subscribe(payload => {
+        if (payload.id) {
+          this.router.navigate(['/account']);
+        }
+      }
+    );
+  }
 
   ngOnInit() {
   }
