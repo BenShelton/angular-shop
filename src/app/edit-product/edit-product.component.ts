@@ -23,6 +23,7 @@ export class EditProductComponent implements OnInit {
     imageUrl: null
   };
   public role: string;
+  public title = 'Add New Product';
   private originalUrl: string;
 
   constructor(
@@ -33,6 +34,7 @@ export class EditProductComponent implements OnInit {
   ) {
     const id = route.snapshot.params.id;
     if (id) {
+      this.title = 'Product Editor';
       this.store.select(rootReducer.getUser)
         .take(1)
         .subscribe(user => {

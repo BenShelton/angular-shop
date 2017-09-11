@@ -5,6 +5,7 @@ import { Action } from '@ngrx/store';
 import { Router } from '@angular/router';
 import * as productAction from '../actions/product';
 import * as orderAction from '../actions/order';
+import * as cartAction from '../actions/cart';
 import { ProductService } from '../services/product.service';
 import { ToasterService } from 'angular2-toaster';
 import { of } from 'rxjs/observable/of';
@@ -25,6 +26,15 @@ export class ProductEffects {
     .debounceTime(300)
     .switchMap(payload => this.productService.load(payload)
       .map(res => new productAction.LoadProductSuccessAction(res))
+      .catch(err => of(new productAction.ServerFailAction(err)))
+    );
+
+  @Effect()
+  refreshCart$: Observable<Action> = this.actions$
+    .ofType(cartAction.ActionTypes.REFRESH_CART)
+    .debounceTime(300)
+    .switchMap(payload => this.productService.load(payload)
+      .map(res => new cartAction.RefreshCartSuccessAction(res))
       .catch(err => of(new productAction.ServerFailAction(err)))
     );
 

@@ -22,6 +22,14 @@ export function reducer(state = initialState, action: cartAction.Actions): Produ
         ];
       }
 
+    case cartAction.ActionTypes.REFRESH_CART_SUCCESS:
+      const copy = [...state.slice(0)];
+      copy.forEach(item => {
+        const copyIndex = action.payload.map(product => product.id).indexOf(item.id);
+        Object.assign(item, action.payload[copyIndex]);
+      });
+      return copy;
+
     case cartAction.ActionTypes.EMPTY_CART:
       return initialState;
 

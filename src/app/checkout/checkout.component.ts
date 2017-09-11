@@ -4,6 +4,7 @@ import { Product } from '../models/product';
 import { Store } from '@ngrx/store';
 import * as rootReducer from '../reducers';
 import * as orderAction from '../actions/order';
+import * as cartAction from '../actions/cart';
 
 @Component({
   selector: 'app-checkout',
@@ -27,12 +28,14 @@ import * as orderAction from '../actions/order';
     </table>
     <br/>
     <p class="total"><b>Grand Total: </b>{{ cartTotal() | async | currency:'USD':true }}</p>
-    <button (click)="openCheckout()">Purchase</button>
+    <button *ngIf="!userId"><a routerLink="/login">Login To Purchase</a></button>
+    <button *ngIf="userId" (click)="openCheckout()">Purchase</button>
   `,
   styles: [
     ':host { text-align: center; }',
     'button, .total { display: block; width: 200px; margin: 10px 0 10px 70%; }',
     'img { width: 50px; height: 50px; }',
+    'a { color: black; text-decoration: none; cursor: pointer; }',
     'table { width: 80%; margin: 0 auto; border-collapse: collapse; }',
     'th, td { border: 1px solid black; }',
     'th:first-child { border: none; }'
@@ -41,11 +44,12 @@ import * as orderAction from '../actions/order';
 export class CheckoutComponent implements OnInit, OnDestroy {
 
   public items$: Observable<Product[]>;
+  public userId: string;
   private alive = true;
   private items: Product[];
-  private userId: string;
 
   constructor(private store: Store<rootReducer.State>) {
+    this.store.dispatch(new cartAction.RefreshCartAction({}));
     this.items$ = this.store.select(rootReducer.getCart)
       .takeWhile(() => this.alive);
     this.store.select(rootReducer.getUser)

@@ -16,7 +16,7 @@ import 'rxjs/add/operator/map';
         <a routerLink="/shop" routerLinkActive="active">Shop</a>
         <a routerLink="/checkout" routerLinkActive="active">Checkout</a>
       </div>
-      <a *ngIf="isUser$ | async" routerLink="/orders" routerLinkActive="active">Orders</a>
+      <a *ngIf="isLoggedInUser$ | async" routerLink="/orders" routerLinkActive="active">Orders</a>
       <a *ngIf="isManager$ | async" routerLink="/manager" routerLinkActive="active">Manager</a>
       <a *ngIf="isAdmin$ | async" routerLink="/admin" routerLinkActive="active">Admin</a>
       <div class="spacer"></div>
@@ -61,6 +61,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public isUser$: Observable<boolean>;
   public isManager$: Observable<boolean>;
   public isAdmin$: Observable<boolean>;
+  public isLoggedInUser$: Observable<boolean>;
   private alive = true;
 
   constructor(private store: Store<rootReducer.State>) {
@@ -83,6 +84,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.isAdmin$ = this.store.select(rootReducer.getUser)
       .takeWhile(() => this.alive)
       .map((user) => user.role === 'admin');
+
+    this.isLoggedInUser$ = this.store.select(rootReducer.getUser)
+      .takeWhile(() => this.alive)
+      .map((user) => user.id && user.role === 'user');
   }
 
   ngOnInit() {
