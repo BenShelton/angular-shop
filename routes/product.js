@@ -13,7 +13,6 @@ router.patch('/update', (req, res) => {
   try {
     assert.ok(req.body.name);
     assert.ok(req.body.price);
-    assert.ok(req.body.stock);
   } catch (e) {
     return res.status(400).json({
       message: 'Please fill in all required fields',
@@ -49,6 +48,15 @@ router.patch('/update', (req, res) => {
     };
     return res.json(product);
   });
+});
+
+router.patch('/updatestock', (req, res) => {
+  req.body.items.forEach(item => {
+    coll().findAndModify({_id: ObjectId(item.id)}, {}, { $inc: { stock: -item.quantity } }, (err, result) => {
+      if (err) console.log(err);
+    });
+  });
+  return res.json({message: 'Products Updating'});
 });
 
 router.get('/load', (req, res) => {

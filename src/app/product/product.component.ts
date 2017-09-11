@@ -11,7 +11,16 @@ import { Product } from '../models/product';
       <p class="stock">Stock: {{ product.stock }}</p>
       <div *ngIf="!edit" class="shop-view">
         <label>Qty In Cart:</label>
-        <input [(ngModel)]="product.quantity" name="quantity" type="number" step="1" min="0" class="quantity" />
+        <input
+          [(ngModel)]="product.quantity"
+          name="quantity"
+          type="number"
+          step="1"
+          min="0"
+          [max]="product.stock"
+          class="quantity"
+          (blur)="checkQty($event)"
+        />
         <br/>
         <p><b>Total: </b> {{ priceTotal() | currency:'USD':true }}</p>
         <button *ngIf="!inCart()" [disabled]="sameQty()" (click)="updateCart()">Add To Cart</button>
@@ -63,6 +72,10 @@ export class ProductComponent implements OnInit {
 
   priceTotal() {
     return this.product.quantity * this.product.price;
+  }
+
+  checkQty(event) {
+    this.product.quantity = Math.min(event.srcElement.value, this.product.stock);
   }
 
 }

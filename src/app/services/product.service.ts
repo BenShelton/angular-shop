@@ -20,4 +20,9 @@ export class ProductService {
     return this.http.delete(`/api/product/delete/${payload.id}`, payload);
   }
 
+  updateStock(payload) {
+    console.log(payload);
+    return this.http.patch(`/api/product/updatestock`, payload);
+  }
+
 }

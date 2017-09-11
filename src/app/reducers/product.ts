@@ -12,11 +12,18 @@ export function reducer(state = initialState, action: productAction.Actions): Pr
 
     case productAction.ActionTypes.UPDATE_PRODUCT_SUCCESS:
       const updateIndex = state.map(product => product.id).indexOf(action.payload.id);
-      return [
-        ...state.slice(0, updateIndex),
-        Object.assign({}, state[updateIndex], action.payload),
-        ...state.slice(updateIndex + 1)
-      ];
+      if (updateIndex === -1) {
+        return [
+          ...state.slice(0),
+          action.payload
+        ];
+      } else {
+        return [
+          ...state.slice(0, updateIndex),
+          Object.assign({}, state[updateIndex], action.payload),
+          ...state.slice(updateIndex + 1)
+        ];
+      }
 
     case productAction.ActionTypes.DELETE_PRODUCT_SUCCESS:
       const deleteIndex = state.map(product => product.id).indexOf(action.payload.id);

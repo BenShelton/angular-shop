@@ -4,6 +4,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Router } from '@angular/router';
 import * as productAction from '../actions/product';
+import * as orderAction from '../actions/order';
 import { ProductService } from '../services/product.service';
 import { ToasterService } from 'angular2-toaster';
 import { of } from 'rxjs/observable/of';
@@ -51,6 +52,16 @@ export class ProductEffects {
         });
     }
   );
+
+  @Effect()
+  updateStock$: Observable<Action> = this.actions$
+    .ofType(orderAction.ActionTypes.CREATE_ORDER_SUCCESS)
+    .debounceTime(300)
+    .map((action: orderAction.CreateOrderSuccessAction) => action.payload)
+    .switchMap(payload => this.productService.updateStock(payload)
+      .map(res => new productAction.UpdateStockSuccessAction(res))
+      .catch(err => of(new productAction.ServerFailAction(err)))
+    );
 
   @Effect()
   delete$: Observable<Action> = this.actions$
