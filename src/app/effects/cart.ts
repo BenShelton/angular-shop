@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import * as cartAction from '../actions/cart';
+import * as orderAction from '../actions/order';
 import { ToasterService } from 'angular2-toaster';
 import { of } from 'rxjs/observable/of';
 import { Store } from '@ngrx/store';
@@ -20,6 +21,12 @@ export class CartEffects {
     .do(payload => {
       this.toasterService.pop('success', 'Cart Updated', `${payload.quantity} ${payload.name}(s) in cart!`);
     }
+  );
+
+  @Effect()
+  emptyCart$: Observable<Action> = this.actions$
+    .ofType(orderAction.ActionTypes.CREATE_ORDER_SUCCESS)
+    .map(payload => new cartAction.EmptyCartAction(payload)
   );
 
   constructor(

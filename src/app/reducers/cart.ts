@@ -22,6 +22,9 @@ export function reducer(state = initialState, action: cartAction.Actions): Produ
         ];
       }
 
+    case cartAction.ActionTypes.EMPTY_CART:
+      return initialState;
+
     default:
       return state;
   }

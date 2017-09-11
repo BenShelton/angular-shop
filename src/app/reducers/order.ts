@@ -10,6 +10,9 @@ export function reducer(state = initialState, action: orderAction.Actions): Orde
     case orderAction.ActionTypes.CREATE_ORDER_SUCCESS:
       return [...state.slice(0), action.payload];
 
+    case orderAction.ActionTypes.LOAD_ORDER_SUCCESS:
+      return action.payload;
+
     // case orderAction.ActionTypes.UPDATE_ORDER:
     //   const updateIndex = state.map(item => item.id).indexOf(action.payload.id);
     //   if (action.payload.quantity) {

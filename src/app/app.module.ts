@@ -49,6 +49,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ProductListModule } from './product-list/product-list.module';
 import { RegisterModule } from './register/register.module';
 import { AccountModule } from './account/account.module';
+import { OrderListModule } from './order-list/order-list.module';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { AccountModule } from './account/account.module';
     ProductListModule,
     RegisterModule,
     AccountModule,
+    OrderListModule,
     ToasterModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([

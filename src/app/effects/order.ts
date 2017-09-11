@@ -38,6 +38,16 @@ export class OrderEffects {
     }
   );
 
+  @Effect()
+  load$: Observable<Action> = this.actions$
+    .ofType(orderAction.ActionTypes.LOAD_ORDER)
+    .debounceTime(300)
+    .map((action: orderAction.LoadOrderAction) => action.payload)
+    .switchMap(payload => this.orderService.load(payload)
+      .map(res => new orderAction.LoadOrderSuccessAction(res))
+      .catch(err => of(new orderAction.ServerFailAction(err)))
+    );
+
   @Effect({ dispatch: false })
   serverFail$: Observable<Action> = this.actions$
     .ofType(orderAction.ActionTypes.SERVER_FAIL)

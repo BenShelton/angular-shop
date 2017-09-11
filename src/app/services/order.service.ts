@@ -12,4 +12,8 @@ export class OrderService {
     return this.http.post(`/api/order/create`, payload);
   }
 
+  load(payload) {
+    return this.http.get(`/api/order/load/${payload.id}`, payload);
+  }
+
 }
