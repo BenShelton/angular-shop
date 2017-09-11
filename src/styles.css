@@ -3,3 +3,13 @@
 html, body {
   font-family: 'Alegreya Sans', sans-serif;
 }
+button {
+  -webkit-appearance: none;
+  background: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  box-shadow: 2px 2px 3px grey;
+}

@@ -9,7 +9,9 @@ import { ToasterService } from 'angular2-toaster';
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.html',
-  styles: []
+  styles: [
+    '.delete { background: red; }'
+  ]
 })
 export class EditProductComponent implements OnInit {
 
@@ -48,6 +50,14 @@ export class EditProductComponent implements OnInit {
 
   onSubmit() {
     this.store.dispatch(new productAction.UpdateProductAction(this.product));
+  }
+
+  onDelete(event) {
+    event.preventDefault();
+    const res = confirm('Are you sure you want to delete?');
+    if (res) {
+      this.store.dispatch(new productAction.DeleteProductAction(this.product));
+    }
   }
 
   imageUploaded(event) {

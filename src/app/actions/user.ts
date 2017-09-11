@@ -44,6 +44,16 @@ export class UpdateUserSuccessAction implements Action {
   constructor(public payload: any) { }
 }
 
+export class DeleteUserAction implements Action {
+  readonly type = ActionTypes.DELETE_USER;
+  constructor(public payload: any) { }
+}
+
+export class DeleteUserSuccessAction implements Action {
+  readonly type = ActionTypes.DELETE_USER_SUCCESS;
+  constructor(public payload: any) { }
+}
+
 export class LogoutUserAction implements Action {
   readonly type = ActionTypes.LOGOUT_USER;
   constructor(public payload: any) { }
@@ -61,5 +71,7 @@ export type Actions
   | LoginUserSuccessAction
   | UpdateUserAction
   | UpdateUserSuccessAction
+  | DeleteUserAction
+  | DeleteUserSuccessAction
   | LogoutUserAction
   | ServerFailAction;

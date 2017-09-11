@@ -7,6 +7,7 @@ export const ActionTypes = {
   UPDATE_PRODUCT: type('[Product] Update Product'),
   UPDATE_PRODUCT_SUCCESS: type('[Product] Update Product Success'),
   DELETE_PRODUCT: type('[Product] Delete Product'),
+  DELETE_PRODUCT_SUCCESS: type('[Product] Delete Product Success'),
   SERVER_FAIL: type('[Product] Server Fail')
 };
 
@@ -35,6 +36,11 @@ export class DeleteProductAction implements Action {
   constructor(public payload: any) { }
 }
 
+export class DeleteProductSuccessAction implements Action {
+  readonly type = ActionTypes.DELETE_PRODUCT_SUCCESS;
+  constructor(public payload: any) { }
+}
+
 export class ServerFailAction implements Action {
   readonly type = ActionTypes.SERVER_FAIL;
   constructor(public payload: any) { }
@@ -46,4 +52,5 @@ export type Actions
   | UpdateProductAction
   | UpdateProductSuccessAction
   | DeleteProductAction
+  | DeleteProductSuccessAction
   | ServerFailAction;

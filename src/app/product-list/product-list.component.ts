@@ -27,6 +27,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   public products$: Observable<Product[]>;
   public edit: boolean;
+  public loading = true;
   private alive = true;
 
   constructor(private store: Store<rootReducer.State>, private router: Router) {
@@ -36,6 +37,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.store.select(rootReducer.getUser)
       .take(1)
       .subscribe(user => this.edit = user.role !== 'user');
+    this.loading = false;
   }
 
   ngOnInit() {

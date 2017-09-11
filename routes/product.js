@@ -75,4 +75,27 @@ router.get('/load', (req, res) => {
   });
 });
 
+router.delete('/delete/:id', (req, res) => {
+  try {
+    assert.ok(req.params.id);
+  } catch (e) {
+    return res.status(400).json({
+      message: 'No Product ID Supplied',
+      err: e
+    });
+  }
+  coll().deleteOne({_id: ObjectId(req.params.id)}, (err, result) => {
+    try {
+      assert.equal(null, err);
+      assert.equal(1, result.result.n);
+    } catch (e) {
+      return res.status(500).json({
+        message: 'Product Not Deleted',
+        err: e
+      });
+    }
+    return res.json({id: req.params.id});
+  });
+});
+
 module.exports = router;

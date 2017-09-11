@@ -29,6 +29,9 @@ import { ProductService } from './services/product.service';
 // routes
 import { routes } from './app.routes';
 
+// guards
+import { AdminGuard } from './guards/admin.guard';
+
 // components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -74,7 +77,8 @@ import { AccountModule } from './account/account.module';
   providers: [
     UserService,
     UsersService,
-    ProductService
+    ProductService,
+    AdminGuard
   ],
   bootstrap: [AppComponent]
 })

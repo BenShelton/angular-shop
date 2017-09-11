@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  autofillUser() {
+  autofillUser(event) {
+    event.preventDefault();
     this.user.email = 'ben@test.com';
     this.user.password = 'password';
   }

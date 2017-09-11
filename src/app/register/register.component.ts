@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
       .take(1)
       .subscribe(payload => {
         this.isAdmin = payload.role === 'admin';
+        this.user.captcha = 'AdminCreated';
       });
   }
 

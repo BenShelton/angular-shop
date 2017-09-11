@@ -6,6 +6,7 @@ import { Product } from '../models/product';
   template: `
     <div class="product">
       <img [src]="product.imageUrl || '/assets/placeholder.png'" alt="No Image">
+      <p class="name"><strong>{{ product.name }}</strong></p>
       <p class="price">Price: {{ product.price }}</p>
       <p class="stock">Stock: {{ product.stock }}</p>
       <div *ngIf="!edit" class="shop-view">

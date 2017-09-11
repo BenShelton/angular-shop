@@ -111,10 +111,26 @@ router.patch('/update', (req, res) => {
   });
 });
 
-router.get('/all', (req, res) => {
-  coll().find().toArray((err, docs) => {
-    assert.equal(null, err);
-    return res.json(docs);
+router.delete('/delete/:id', (req, res) => {
+  try {
+    assert.ok(req.params.id);
+  } catch (e) {
+    return res.status(400).json({
+      message: 'No User ID Supplied',
+      err: e
+    });
+  }
+  coll().deleteOne({_id: ObjectId(req.params.id)}, (err, result) => {
+    try {
+      assert.equal(null, err);
+      assert.equal(1, result.result.n);
+    } catch (e) {
+      return res.status(500).json({
+        message: 'User Not Deleted',
+        err: e
+      });
+    }
+    return res.json({id: req.params.id});
   });
 });
 

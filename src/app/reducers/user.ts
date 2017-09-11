@@ -25,7 +25,7 @@ export function reducer(state = initialState, action: userAction.Actions): User 
       return state.id === action.payload.id ? action.payload : state;
 
     case userAction.ActionTypes.DELETE_USER_SUCCESS:
-      return state;
+      return state.id === action.payload.id ? initialState : state;
 
     default:
       return state;

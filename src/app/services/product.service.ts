@@ -16,4 +16,8 @@ export class ProductService {
     return this.http.patch(`/api/product/update`, payload);
   }
 
+  delete(payload) {
+    return this.http.delete(`/api/product/delete/${payload.id}`, payload);
+  }
+
 }

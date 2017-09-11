@@ -47,6 +47,26 @@ export class ProductEffects {
     }
   );
 
+  @Effect()
+  delete$: Observable<Action> = this.actions$
+    .ofType(productAction.ActionTypes.DELETE_PRODUCT)
+    .debounceTime(300)
+    .map((action: productAction.DeleteProductAction) => action.payload)
+    .switchMap(payload => this.productService.delete(payload)
+      .map(res => new productAction.DeleteProductSuccessAction(res))
+      .catch(err => of(new productAction.ServerFailAction(err)))
+    );
+
+  @Effect({ dispatch: false })
+  redirectDelete$: Observable<Action> = this.actions$
+    .ofType(productAction.ActionTypes.DELETE_PRODUCT_SUCCESS)
+    .map((action: productAction.DeleteProductSuccessAction) => action.payload)
+    .do(payload => {
+      this.toasterService.pop('success', 'Product Deleted', `Shop is Updated`);
+      this.router.navigate(['/admin/products/list']);
+    }
+  );
+
   @Effect({ dispatch: false })
   serverFail$: Observable<Action> = this.actions$
     .ofType(productAction.ActionTypes.SERVER_FAIL)

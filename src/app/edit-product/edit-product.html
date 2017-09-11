@@ -64,4 +64,7 @@
   <button type="submit" [disabled]="!userForm.form.valid">
     Submit
   </button>
+
+  <br/><br/>
+  <button *ngIf="product.id" class="delete" (click)="onDelete($event)">Delete</button>
 </form>

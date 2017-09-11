@@ -14,7 +14,8 @@ import { ToasterService } from 'angular2-toaster';
     ':host { text-align: center; }',
     'input, select { width: 80%; max-width: 160px; }',
     'label { display: inline-block; width: 20%; max-width: 80px; text-align: right; }',
-    'button { display: inline-block; } '
+    'button { display: inline-block; }',
+    '.delete { background: red; }'
   ]
 })
 export class AccountComponent implements OnInit {
@@ -27,6 +28,7 @@ export class AccountComponent implements OnInit {
     role: <string> null
   };
   public editMode: Boolean = false;
+  public canEditRole: Boolean = false;
   private alive = true;
 
   constructor(
@@ -51,17 +53,19 @@ export class AccountComponent implements OnInit {
             this.router.navigate(['/admin/users/list']);
           }
         });
-    } else {
-      this.store.select(rootReducer.getUser)
-        .take(1)
-        .subscribe(payload => {
+    }
+    this.store.select(rootReducer.getUser)
+      .take(1)
+      .subscribe(payload => {
+        if (!id) {
           this.user.id = payload.id;
           this.user.name = payload.name;
           this.user.email = payload.email;
           this.user.role = payload.role;
         }
-      );
-    }
+        this.canEditRole = payload.role === 'admin';
+      }
+    );
   }
 
   ngOnInit() {
@@ -74,6 +78,14 @@ export class AccountComponent implements OnInit {
   editUser(event) {
     event.preventDefault();
     this.editMode = true;
+  }
+
+  deleteUser(event) {
+    event.preventDefault();
+    const res = confirm('Are you sure you want to delete?');
+    if (res) {
+      this.store.dispatch(new userAction.DeleteUserAction(this.user));
+    }
   }
 
 }

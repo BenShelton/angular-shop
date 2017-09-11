@@ -41,7 +41,7 @@ import { Component, OnInit } from '@angular/core';
       margin: 5px;
     }`,
     '.section > a.active { background: white; color: black; cursor: default; }',
-    '.output { flex: 0 0 80%; overflow-y: scroll; }'
+    '.output { height: 800px; flex: 0 0 80%; overflow-y: scroll; }'
   ]
 })
 export class ControlPanelComponent implements OnInit {

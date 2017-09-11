@@ -103,6 +103,35 @@ export class UserEffects {
     }
   );
 
+  @Effect()
+  delete$: Observable<Action> = this.actions$
+    .ofType(userAction.ActionTypes.DELETE_USER)
+    .debounceTime(300)
+    .map((action: userAction.DeleteUserAction) => action.payload)
+    .switchMap(payload => this.userService.delete(payload)
+      .map(res => new userAction.DeleteUserSuccessAction(res))
+      .catch(err => of(new userAction.ServerFailAction(err)))
+    );
+
+  @Effect({ dispatch: false })
+  redirectDelete$: Observable<Action> = this.actions$
+    .ofType(userAction.ActionTypes.DELETE_USER_SUCCESS)
+    .map((action: userAction.DeleteUserSuccessAction) => action.payload)
+    .do(payload => {
+      this.store.select(rootReducer.getUser)
+        .take(1)
+        .subscribe(storePayload => {
+          if (!storePayload.id) {
+            this.toasterService.pop('success', 'Account Deleted', `We'll be here if you change your mind!`);
+            this.router.navigate(['/']);
+          } else {
+            this.toasterService.pop('success', 'Account Deleted', `User details removed`);
+            this.router.navigate(['/admin/users/list']);
+          }
+        });
+    }
+  );
+
   @Effect({ dispatch: false })
   redirectLogout$: Observable<Action> = this.actions$
     .ofType(userAction.ActionTypes.LOGOUT_USER)

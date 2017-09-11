@@ -37,7 +37,7 @@
   />
   <br/>
 
-  <div [hidden]="user.role !== 'admin'">
+  <div [hidden]="!canEditRole">
     <label for="role">
       Role:
     </label>
@@ -60,6 +60,10 @@
   </button>
   <button *ngIf="editMode" type="submit" [disabled]="!userForm.form.valid">
     Update
+  </button>
+  <br/><br/>
+  <button class="delete" *ngIf="editMode" (click)="deleteUser($event)">
+    Delete
   </button>
 
 </form>
