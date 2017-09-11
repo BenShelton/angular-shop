@@ -55,8 +55,8 @@ router.post('/login', (req, res) => {
   };
   // find document
   coll().findOne(query, (err, result) => {
-    assert.equal(null, err);
     try {
+      assert.equal(null, err);
       assert.ok(result);
     } catch (e) {
       return res.status(404).json({

@@ -5,6 +5,7 @@ import { ManagerGuard } from './guards/manager.guard';
 
 import { HomeComponent } from './home/home.component';
 import { ShopComponent } from './shop/shop.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountComponent } from './account/account.component';
@@ -13,6 +14,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 export const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'shop', component: ShopComponent },
+  { path: 'checkout', component: CheckoutComponent },
   {
     path: 'manager',
     canActivate: [ManagerGuard],

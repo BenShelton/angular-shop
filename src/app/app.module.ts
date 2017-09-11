@@ -21,11 +21,13 @@ import { UserEffects } from './effects/user';
 import { UsersEffects } from './effects/users';
 import { ProductEffects } from './effects/product';
 import { CartEffects } from './effects/cart';
+import { OrderEffects } from './effects/order';
 
 // services
 import { UserService } from './services/user.service';
 import { UsersService } from './services/users.service';
 import { ProductService } from './services/product.service';
+import { OrderService } from './services/order.service';
 
 // routes
 import { routes } from './app.routes';
@@ -41,6 +43,7 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
 import { ShopComponent } from './shop/shop.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 // shared modules
 import { ProductListModule } from './product-list/product-list.module';
@@ -54,7 +57,8 @@ import { AccountModule } from './account/account.module';
     HomeComponent,
     PageNotFoundComponent,
     LoginComponent,
-    ShopComponent
+    ShopComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -70,15 +74,17 @@ import { AccountModule } from './account/account.module';
       UserEffects,
       UsersEffects,
       ProductEffects,
-      CartEffects
+      CartEffects,
+      OrderEffects
     ]),
-    StoreDevtoolsModule.instrument({ maxAge: 10 }),
+    StoreDevtoolsModule.instrument({ maxAge: 7 }),
     RouterModule.forRoot(routes, {/* enableTracing: true */})
   ],
   providers: [
     UserService,
     UsersService,
     ProductService,
+    OrderService,
     AdminGuard,
     ManagerGuard
   ],

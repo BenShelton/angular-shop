@@ -13,6 +13,7 @@ import 'rxjs/add/operator/map';
     <nav>
       <a class="logo" routerLink="/"></a>
       <a *ngIf="isUser$ | async" routerLink="/shop" routerLinkActive="active">Shop</a>
+      <a *ngIf="isUser$ | async" routerLink="/checkout" routerLinkActive="active">Checkout</a>
       <a *ngIf="isManager$ | async" routerLink="/manager" routerLinkActive="active">Manager</a>
       <a *ngIf="isAdmin$ | async" routerLink="/admin" routerLinkActive="active">Admin</a>
       <div class="spacer"></div>
