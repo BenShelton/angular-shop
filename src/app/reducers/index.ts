@@ -4,7 +4,6 @@ import * as usersReducer from './users';
 import * as cartReducer from './cart';
 import * as productReducer from './product';
 import { User } from '../models/user';
-import { Cart } from '../models/cart';
 import { Product } from '../models/product';
 import { createSelector } from 'reselect';
 import { localStorageSync } from 'ngrx-store-localstorage';
@@ -13,7 +12,7 @@ import { environment } from '../../environments/environment';
 export interface State {
   user: User;
   users: User[];
-  cart: Cart;
+  cart: Product[];
   product: Product[];
 }
 
@@ -25,7 +24,7 @@ export const reducers: ActionReducerMap<State> = {
 };
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
-  return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
+  return localStorageSync({ keys: ['user', 'cart'], rehydrate: true })(reducer);
 }
 
 export const metaReducers: MetaReducer<State>[] = [localStorageSyncReducer];

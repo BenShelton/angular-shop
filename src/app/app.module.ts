@@ -20,6 +20,7 @@ import { reducers, metaReducers } from './reducers';
 import { UserEffects } from './effects/user';
 import { UsersEffects } from './effects/users';
 import { ProductEffects } from './effects/product';
+import { CartEffects } from './effects/cart';
 
 // services
 import { UserService } from './services/user.service';
@@ -68,7 +69,8 @@ import { AccountModule } from './account/account.module';
     EffectsModule.forRoot([
       UserEffects,
       UsersEffects,
-      ProductEffects
+      ProductEffects,
+      CartEffects
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 10 }),
     RouterModule.forRoot(routes, {/* enableTracing: true */})

@@ -6,6 +6,7 @@ import * as productAction from '../actions/product';
 import * as cartAction from '../actions/cart';
 import { Product } from '../models/product';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
 
 @Component({
   selector: 'app-product-list',
@@ -32,7 +33,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<rootReducer.State>, private router: Router) {
     this.store.dispatch(new productAction.LoadProductAction({}));
-    this.products$ = this.store.select(rootReducer.getProduct)
+    this.products$ = Observable.combineLatest(
+      this.store.select(rootReducer.getProduct),
+      this.store.select(rootReducer.getCart),
+      (products, cart) => {
+        return products.map(product => Object.assign({}, product, {
+          quantity: cart.reduce((acc, item) => item.id === product.id ? acc + item.quantity : acc, 0)
+        }));
+      })
       .takeWhile(() => this.alive);
     this.store.select(rootReducer.getUser)
       .take(1)

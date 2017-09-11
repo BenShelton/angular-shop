@@ -11,9 +11,11 @@ import { Product } from '../models/product';
       <p class="stock">Stock: {{ product.stock }}</p>
       <div *ngIf="!edit" class="shop-view">
         <label>Qty In Cart:</label>
-        <input [(ngModel)]="newQty" name="quantity" type="number" step="1" min="0" class="quantity" />
+        <input [(ngModel)]="product.quantity" name="quantity" type="number" step="1" min="0" class="quantity" />
         <br/>
-        <button [disabled]="sameQty()" (click)="updateCart()">Update Cart</button>
+        <p><b>Total: </b> {{ priceTotal() }}</p>
+        <button *ngIf="!inCart()" [disabled]="sameQty()" (click)="updateCart()">Add To Cart</button>
+        <button *ngIf="inCart()" [disabled]="sameQty()" (click)="updateCart()">Update Cart</button>
       </div>
       <div *ngIf="edit" class="edit-view">
         <button (click)="editProduct()">Edit Product</button>
@@ -33,13 +35,14 @@ export class ProductComponent implements OnInit {
   @Output() 'onUpdate' = new EventEmitter<Product>();
   @Output() 'onEdit' = new EventEmitter<Product>();
 
-  public newQty: number;
+  public originalQty: number;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.newQty = this.product.quantity || 0;
+    this.product.quantity = this.product.quantity;
+    this.originalQty = this.product.quantity;
   }
 
   updateCart() {
@@ -51,7 +54,15 @@ export class ProductComponent implements OnInit {
   }
 
   sameQty() {
-    return this.newQty === (this.product.quantity || 0);
+    return this.product.quantity === this.originalQty;
+  }
+
+  inCart() {
+    return this.originalQty > 0;
+  }
+
+  priceTotal() {
+    return this.product.quantity * this.product.price;
   }
 
 }
