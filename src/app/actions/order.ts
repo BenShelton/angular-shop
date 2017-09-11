@@ -7,6 +7,9 @@ export const ActionTypes = {
   LOAD_ORDER: type('[Order] Load Order'),
   LOAD_ORDER_SUCCESS: type('[Order] Load Order Success'),
   UPDATE_ORDER: type('[Order] Update Order'),
+  UPDATE_ORDER_SUCCESS: type('[Order] Update Order Success'),
+  DELETE_ORDER: type('[Order] Delete Order'),
+  DELETE_ORDER_SUCCESS: type('[Order] Delete Order Success'),
   SERVER_FAIL: type('[Order] Server Fail')
 };
 
@@ -35,6 +38,21 @@ export class UpdateOrderAction implements Action {
   constructor(public payload: any) { }
 }
 
+export class UpdateOrderSuccessAction implements Action {
+  readonly type = ActionTypes.UPDATE_ORDER_SUCCESS;
+  constructor(public payload: any) { }
+}
+
+export class DeleteOrderAction implements Action {
+  readonly type = ActionTypes.DELETE_ORDER;
+  constructor(public payload: any) { }
+}
+
+export class DeleteOrderSuccessAction implements Action {
+  readonly type = ActionTypes.DELETE_ORDER_SUCCESS;
+  constructor(public payload: any) { }
+}
+
 export class ServerFailAction implements Action {
   readonly type = ActionTypes.SERVER_FAIL;
   constructor(public payload: any) { }
@@ -46,4 +64,7 @@ export type Actions
   | LoadOrderAction
   | LoadOrderSuccessAction
   | UpdateOrderAction
+  | UpdateOrderSuccessAction
+  | DeleteOrderAction
+  | DeleteOrderSuccessAction
   | ServerFailAction;

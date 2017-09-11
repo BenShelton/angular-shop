@@ -16,4 +16,12 @@ export class OrderService {
     return this.http.get(`/api/order/load/${payload.id}`, payload);
   }
 
+  update(payload) {
+    return this.http.patch(`/api/order/update`, payload);
+  }
+
+  delete(payload) {
+    return this.http.delete(`/api/order/delete/${payload.id}`, payload);
+  }
+
 }

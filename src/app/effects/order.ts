@@ -48,6 +48,44 @@ export class OrderEffects {
       .catch(err => of(new orderAction.ServerFailAction(err)))
     );
 
+  @Effect()
+  update$: Observable<Action> = this.actions$
+    .ofType(orderAction.ActionTypes.UPDATE_ORDER)
+    .debounceTime(300)
+    .map((action: orderAction.UpdateOrderAction) => action.payload)
+    .switchMap(payload => this.orderService.update(payload)
+      .map(res => new orderAction.UpdateOrderSuccessAction(res))
+      .catch(err => of(new orderAction.ServerFailAction(err)))
+    );
+
+  @Effect({ dispatch: false })
+  updateSuccess$: Observable<Action> = this.actions$
+    .ofType(orderAction.ActionTypes.UPDATE_ORDER_SUCCESS)
+    .map((action: orderAction.UpdateOrderSuccessAction) => action.payload)
+    .do(payload => {
+      this.toasterService.pop('success', 'Order Updated', `Customer will be notified`);
+    }
+  );
+
+  @Effect()
+  delete$: Observable<Action> = this.actions$
+    .ofType(orderAction.ActionTypes.DELETE_ORDER)
+    .debounceTime(300)
+    .map((action: orderAction.DeleteOrderAction) => action.payload)
+    .switchMap(payload => this.orderService.delete(payload)
+      .map(res => new orderAction.DeleteOrderSuccessAction(res))
+      .catch(err => of(new orderAction.ServerFailAction(err)))
+    );
+
+  @Effect({ dispatch: false })
+  deleteSuccess$: Observable<Action> = this.actions$
+    .ofType(orderAction.ActionTypes.DELETE_ORDER_SUCCESS)
+    .map((action: orderAction.DeleteOrderSuccessAction) => action.payload)
+    .do(payload => {
+      this.toasterService.pop('success', 'Order Deleted', `Please take appropriate action`);
+    }
+  );
+
   @Effect({ dispatch: false })
   serverFail$: Observable<Action> = this.actions$
     .ofType(orderAction.ActionTypes.SERVER_FAIL)
@@ -61,7 +99,8 @@ export class OrderEffects {
     private actions$: Actions,
     private orderService: OrderService,
     private router: Router,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private store: Store<rootReducer.State>
   ) {
   }
 }

@@ -42,8 +42,13 @@ export class ProductEffects {
     .ofType(productAction.ActionTypes.UPDATE_PRODUCT_SUCCESS)
     .map((action: productAction.UpdateProductSuccessAction) => action.payload)
     .do(payload => {
-      this.toasterService.pop('success', 'Product Updated', `Shop is Updated`);
-      this.router.navigate(['/admin/products/list']);
+      this.store.select(rootReducer.getUser)
+        .take(1)
+        .subscribe(storePayload => {
+          const redirect = `${storePayload.role}/products/list`;
+          this.toasterService.pop('success', 'Product Updated', `Shop is Updated`);
+          this.router.navigate([redirect]);
+        });
     }
   );
 
@@ -80,7 +85,8 @@ export class ProductEffects {
     private actions$: Actions,
     private productService: ProductService,
     private router: Router,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private store: Store<rootReducer.State>
   ) {
   }
 }

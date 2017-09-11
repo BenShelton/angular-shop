@@ -75,6 +75,44 @@ router.post('/create', (req, res) => {
   });
 });
 
+router.patch('/update', (req, res) => {
+  // check fields
+  try {
+    assert.ok(req.body.id);
+  } catch (e) {
+    return res.status(400).json({
+      message: 'Order ID Not Found',
+      err: e
+    });
+  }
+  let query = {
+    '_id': ObjectId(req.body.id),
+  };
+  let updateOrder = {
+    status: req.body.status
+  };
+
+  // find and modify document
+  coll().findOneAndUpdate(query, { $set: updateOrder }, { returnOriginal: false }, (err, result) => {
+    try {
+      assert.equal(null, err);
+      assert.ok(result.value);
+    } catch (e) {
+      return res.status(500).json({
+        message: 'Order Not Updated',
+        err: e
+      });
+    }
+    let order = {
+      id: result.value._id,
+      userId: result.value.userId,
+      items: result.value.items,
+      status: result.value.status
+    };
+    return res.json(order);
+  });
+});
+
 router.delete('/delete/:id', (req, res) => {
   try {
     assert.ok(req.params.id);

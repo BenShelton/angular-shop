@@ -13,20 +13,20 @@ export function reducer(state = initialState, action: orderAction.Actions): Orde
     case orderAction.ActionTypes.LOAD_ORDER_SUCCESS:
       return action.payload;
 
-    // case orderAction.ActionTypes.UPDATE_ORDER:
-    //   const updateIndex = state.map(item => item.id).indexOf(action.payload.id);
-    //   if (action.payload.quantity) {
-    //     return [
-    //       ...state.slice(0, updateIndex),
-    //       Object.assign({}, state[updateIndex], action.payload),
-    //       ...state.slice(updateIndex + 1)
-    //     ];
-    //   } else {
-    //     return [
-    //       ...state.slice(0, updateIndex),
-    //       ...state.slice(updateIndex + 1)
-    //     ];
-    //   }
+    case orderAction.ActionTypes.UPDATE_ORDER_SUCCESS:
+      const updateIndex = state.map(order => order.id).indexOf(action.payload.id);
+      return [
+        ...state.slice(0, updateIndex),
+        Object.assign({}, state[updateIndex], action.payload),
+        ...state.slice(updateIndex + 1)
+      ];
+
+    case orderAction.ActionTypes.DELETE_ORDER_SUCCESS:
+      const deleteIndex = state.map(order => order.id).indexOf(action.payload.id);
+      return [
+        ...state.slice(0, deleteIndex),
+        ...state.slice(deleteIndex + 1)
+      ];
 
     default:
       return state;

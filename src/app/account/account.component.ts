@@ -79,6 +79,8 @@ export class AccountComponent implements OnInit {
           this.user.name = payload.name;
           this.user.email = payload.email;
           this.user.role = payload.role;
+          this.user.billingAddress = payload.billingAddress;
+          this.user.shippingAddress = payload.shippingAddress;
         }
         this.canEditRole = payload.role === 'admin';
       }

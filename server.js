@@ -19,7 +19,7 @@ mongodb.connect(MONGOURI, {}, (err, db) => {
   app.use(bodyParser.json());
 
   // SPA
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/dist'));
 
   // API
   global.rootDir = __dirname;

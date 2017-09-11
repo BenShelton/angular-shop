@@ -12,6 +12,7 @@ import * as userAction from '../actions/user';
     'label { display: inline-block; width: 20%; max-width: 80px; text-align: right; }',
     'input.ng-invalid.ng-touched { background: #FF5F49; }',
     'input.ng-valid.ng-touched { background: #C7FF8E; }',
+    '.addresses > .address > input { background: white; }',
     're-captcha { display: inline-block; }'
   ]
 })
@@ -39,14 +40,16 @@ export class RegisterComponent implements OnInit {
     captcha: <any> null
   };
 
-  public isAdmin: boolean;
+  public isAdmin = false;
 
   constructor(private store: Store<rootReducer.State>) {
     this.store.select(rootReducer.getUser)
       .take(1)
       .subscribe(payload => {
-        this.isAdmin = payload.role === 'admin';
-        this.user.captcha = 'AdminCreated';
+        if (payload.role === 'admin') {
+          this.isAdmin = true;
+          this.user.captcha = 'AdminCreated';
+        }
       });
   }
 

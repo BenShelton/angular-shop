@@ -23,6 +23,24 @@ router.post('/create', (req, res) => {
       err: e
     });
   }
+  // if user force address entering
+  if (req.body.role === 'user') {
+    try {
+      assert.ok(req.body.billingAddress.address1);
+      assert.ok(req.body.billingAddress.city);
+      assert.ok(req.body.billingAddress.county);
+      assert.ok(req.body.billingAddress.postcode);
+      assert.ok(req.body.shippingAddress.address1);
+      assert.ok(req.body.shippingAddress.city);
+      assert.ok(req.body.shippingAddress.county);
+      assert.ok(req.body.shippingAddress.postcode);
+    } catch (e) {
+      return res.status(400).json({
+        message: 'Users need to enter both addresses',
+        err: e
+      });
+    }
+  }
   // insert document
   coll().insertOne(req.body, (err, result) => {
     assert.equal(null, err);
@@ -85,6 +103,24 @@ router.patch('/update', (req, res) => {
       message: 'Login ID Not Found',
       err: e
     });
+  }
+  // if user force address entering
+  if (req.body.role === 'user') {
+    try {
+      assert.ok(req.body.billingAddress.address1);
+      assert.ok(req.body.billingAddress.city);
+      assert.ok(req.body.billingAddress.county);
+      assert.ok(req.body.billingAddress.postcode);
+      assert.ok(req.body.shippingAddress.address1);
+      assert.ok(req.body.shippingAddress.city);
+      assert.ok(req.body.shippingAddress.county);
+      assert.ok(req.body.shippingAddress.postcode);
+    } catch (e) {
+      return res.status(400).json({
+        message: 'Users need to enter both addresses',
+        err: e
+      });
+    }
   }
   let query = {
     '_id': ObjectId(req.body.id)
